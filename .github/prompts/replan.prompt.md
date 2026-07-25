@@ -19,5 +19,7 @@ Trigger issue number: ${input:issueNumber}
    before changing anything.
 4. On approval: apply via `gh issue edit/create/close`, remove `ai:ready`
    from any task whose brief is now stale, clear `needs:replan` from the
-   trigger, and post the rationale comment on the Epic (the plan's change
-   log): added / modified / closed, and why.
+   trigger, set/update board dates via `scripts/setup-project.sh dates`
+   (plan-management skill, Roadmap scheduling), and post the rationale
+   comment on the Epic (the plan's change log): added / modified / closed,
+   and why.
