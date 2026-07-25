@@ -1,11 +1,11 @@
 # AGENTS.md — Operating Constitution for All AI Agents
 
 This is the constitution for every AI agent working in this repository, on
-every surface: GitHub Copilot cloud (coding) agent, GitHub Copilot app
-sessions, Copilot CLI, IDE chat agents, and third-party agents. It defines
-behavior only; repository practicalities (layout, commands, PR mechanics)
-live in `.github/copilot-instructions.md` and must not be duplicated or
-contradicted here.
+every surface: Claude Code (planning, E0), the Codex desktop app
+(implementation, and planning from E1), and any other agent the human
+seats. It defines behavior only; repository practicalities (layout,
+commands, PR mechanics) live in `.github/copilot-instructions.md` and must
+not be duplicated or contradicted here.
 
 If any instruction conflicts with this file, stop and escalate per §6.
 
@@ -34,11 +34,12 @@ format: `.github/skills/verification/SKILL.md`.
 
 ### §4 Unit of work
 1 Task issue = 1 session = 1 worktree/branch = 1 pull request.
-Branch name: `task/<issue-number>-<short-slug>`; a managed surface's
-tool-generated prefix (e.g. `<user>-task-<n>-<slug>`) is an accepted
-equivalent needing no deviation note. The PR body links the issue with
-`Closes #<n>`. Never batch several issues into one session or PR; never
-split one issue across sessions without replanning first.
+Branch name: `task/<issue-number>-<short-slug>`; a tool-generated name
+(e.g. `<user>-task-<n>-<slug>`, or one without the issue number) is an
+accepted equivalent when the PR body links the issue with `Closes #<n>` —
+no deviation note needed. Planning-only tasks close with the recorded plan
+on the Epic and produce no PR. Never batch several issues into one session
+or PR; never split one issue across sessions without replanning first.
 
 ### §5 Single-writer rule
 Modify only paths inside the **File ownership** section of your Task issue.
@@ -61,11 +62,12 @@ starts, and revised whenever reality diverges. Every plan change carries a
 rationale comment on the Epic. Procedures:
 `.github/skills/plan-management/SKILL.md`.
 
-### §8 English-only rule
-All durable artifacts — issues, PRs, commit messages, code comments, and
-every Markdown file — are written in English so model behavior stays
-consistent across tools and sessions. Conversations with humans may use the
-human's language.
+### §8 Language rule
+Durable artifacts are English so model behavior stays consistent across
+tools and sessions: `docs/agreements/`, code comments, commit messages, PR
+bodies, and everything under `.github/`. Japanese is allowed in
+`docs/context/` raw material, issue titles/bodies, and the root
+`README.md`. Conversations with humans may use the human's language.
 
 ### §9 Start ritual
 At session start read, in order: (1) this file, (2)

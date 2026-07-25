@@ -6,9 +6,10 @@ applyTo: "docs/**"
 
 ## Language and voice
 
-- English only, for every file in this tree. Persistent artifacts must read
-  identically to every model and every future session; mixed-language docs
-  cause nuance drift.
+- `docs/agreements/` is English only: reviewed truth must read identically
+  to every model and every future session, and mixed-language agreements
+  cause nuance drift. `docs/context/` raw material may be Japanese
+  (AGENTS.md §8).
 - Write in the imperative for procedures and in plain declarative sentences
   for facts. State *why* a rule exists when it is not obvious.
 
@@ -19,10 +20,11 @@ applyTo: "docs/**"
   `.github/skills/context-collection/SKILL.md`. Do not "clean up" raw material
   into conclusions here — that is distillation and it happens elsewhere.
 - `docs/agreements/` is **reviewed truth**: requirements (`REQ-###`), ADRs
-  (`ADR-####`), glossary, non-goals. Files here change **only via pull request**
-  with at least one human approval. Never edit them directly on a task branch
-  as a side effect of implementation work; if implementation reveals an
-  agreement is wrong, open a separate agreements PR and link the two.
+  (`ADR-####`), glossary, non-goals. Files here change **only via pull request**;
+  the human merge is the approval gate — agents never merge. Never edit them
+  directly on a task branch as a side effect of implementation work; if
+  implementation reveals an agreement is wrong, open a separate agreements PR
+  and link the two.
 
 ## Traceability
 
