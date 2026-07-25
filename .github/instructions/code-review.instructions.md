@@ -4,8 +4,8 @@ applyTo: "**"
 
 # Code Review Standards
 
-These standards guide Copilot code review, agent reviewers
-(`.github/agents/reviewer.agent.md`), and human reviewers alike. A PR in this
+These standards guide agent reviewers
+(`.github/agents/reviewer.agent.md`) and human reviewers alike. A PR in this
 repository is not just code — it is a claim that a Task issue's acceptance
 criteria are met. Review the claim, not only the diff.
 
