@@ -1,3 +1,12 @@
+---
+source: Claude planning conversation (StackChan plan bundle v1 handoff)
+retrieved: 2026-07-18
+method: export
+collector: Claude Code kickoff session (bundle committed 2026-07-18, commit 35c1f6f, per CODE-KICKOFF.md Step 5)
+sensitivity: internal
+status: raw
+---
+
 # StackChan計画バンドル v1 — HANDOFF
 
 みさきさん誕生日（**2027-07-26**）逆算の大枠計画一式。tt1スキャフォールドの書式・運用（Epic issueグラフ＋Projects(v2)ロードマップ）にそのまま乗る形で作成。
