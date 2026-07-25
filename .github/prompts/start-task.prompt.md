@@ -4,7 +4,8 @@ description: Start work on a Task issue following the child-session start ritual
 ---
 
 Follow the child session protocol in
-`.github/skills/session-orchestration/SKILL.md`.
+`.github/skills/session-orchestration/SKILL.md`. Dispatched from another
+tool? See that skill's "Cross-tool dispatch" section for the lane rules.
 
 Task issue number: ${input:issueNumber}
 
