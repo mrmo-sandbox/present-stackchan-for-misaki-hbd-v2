@@ -6,11 +6,15 @@
 #   (.github|docs|scripts)/<path>.(md|yml|sh|json)
 # and asserts each referenced path exists in the working tree.
 #
+# Scope: docs/context/** is excluded from the scan — it holds raw collected
+# material, which must never require edits to keep CI green.
+#
 # Allowlist — intentional example paths that documentation cites although
 # the files do not exist (onboarding placeholders, replaced per project):
-#   docs/context/device-pairing/    example area cited in docs/agreements/*
-#   docs/context/line-integration/  example area in the context-collection
-#                                   skill
+#   docs/context/device-pairing/    example area cited by the example rows
+#                                   in docs/agreements/requirements.md and
+#                                   docs/agreements/non-goals.md; remove
+#                                   when distillation replaces those rows
 #
 # Output: brief OK summary and exit 0 when everything resolves; list of
 # missing paths and exit 1 otherwise.
@@ -25,11 +29,11 @@ REF_PATTERN='(\.github|docs|scripts)/[A-Za-z0-9_/.-]+\.(md|yml|sh|json)'
 
 ALLOW_PREFIXES=(
   "docs/context/device-pairing/"
-  "docs/context/line-integration/"
 )
 
 md_files=()
-while IFS= read -r f; do md_files+=("$f"); done < <(git ls-files '*.md')
+while IFS= read -r f; do md_files+=("$f"); done \
+  < <(git ls-files '*.md' ':!docs/context/**')
 
 if [ "${#md_files[@]}" -eq 0 ]; then
   echo "check-md-links: OK — no tracked Markdown files to scan."
