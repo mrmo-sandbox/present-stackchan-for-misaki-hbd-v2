@@ -1,3 +1,12 @@
+---
+source: Claude planning conversation (StackChan plan bundle v1 handoff)
+retrieved: 2026-07-18
+method: export
+collector: Claude Code kickoff session (bundle committed 2026-07-18, commit 35c1f6f, per CODE-KICKOFF.md Step 5)
+sensitivity: internal
+status: raw
+---
+
 # CODE-KICKOFF — GitHub起票＆Project作成 実行ランブック（Claude Code用）
 
 - 対象リポジトリ: `mrmo-sandbox/present-stackchan-for-misaki-hbd-v2`
