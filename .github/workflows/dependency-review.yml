@@ -1,0 +1,21 @@
+# Fails PRs that introduce known-vulnerable dependencies (verification
+# layer 2, .github/skills/verification/SKILL.md). The dependency graph is
+# available on this public repository, so the action runs for real; today it
+# mostly guards .github/workflows/** actions, and it starts covering
+# manifests automatically when the E1+ toolchains land.
+name: Dependency Review
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  dependency-review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Dependency review
+        uses: actions/dependency-review-action@v4

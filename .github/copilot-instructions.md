@@ -11,40 +11,46 @@ details Copilot needs to work efficiently in this repository.
 
 ## Repository layout
 
-<!-- CUSTOMIZE: Keep this map accurate; it saves agents expensive exploration.
-     Example:
-     - `firmware/`  — PlatformIO project. Envs defined in `firmware/platformio.ini`.
-     - `server/`    — API server. Entry point `server/src/index.ts`.
-     - `app/`       — client app.
-     - `docs/context/`    — raw collected material (read for background).
-     - `docs/agreements/` — reviewed decisions (read before designing anything).
--->
-- `docs/context/` — raw collected material.
-- `docs/agreements/` — reviewed requirements, ADRs, glossary, non-goals.
+- `docs/context/` — raw collected material: plan-intake bundle (epics,
+  agreement drafts), topic seeds (`stackchan-hw/`, `azure-foundry/`,
+  `line-miniapp/`), design-session records. Japanese allowed (AGENTS.md §8).
+- `docs/agreements/` — reviewed requirements, ADRs, glossary, non-goals,
+  retro log. English only; change via PR (`docs.instructions.md`).
+- `scripts/` — repo automation: `tuning-status.sh` (onboarding regression
+  guard), `check-md-links.sh`, `check-template-sync.sh`, `retro-hygiene.sh`,
+  `setup-labels.sh`, `setup-project.sh`, `setup-ruleset.sh` (POST-only
+  bootstrap — never rerun on an existing ruleset).
+- `.github/workflows/` — `ci.yml` (jobs `quality` and `scaffold-self-check`,
+  both required by the branch ruleset), `copilot-setup-steps.yml`,
+  `retro-hygiene.yml`.
 - `.github/skills/` — procedures. `.github/instructions/` — path-scoped rules.
 - `.github/agents/` — role definitions (orchestrator, planner, reviewer).
+- No application code yet: `firmware/`, proxy/server, and app trees arrive
+  with Epics E1+ (`firmware.instructions.md` is provisional until E3).
 
 ## Environment setup and validated commands
 
-If `CUSTOMIZE` markers remain in this file (check with
-`scripts/tuning-status.sh`), this repository has **not been onboarded** —
-run `.github/skills/project-onboarding/SKILL.md` before trusting or
-extending the commands below.
+The repository is docs/planning-only (E0): nothing to build. Every command
+below was executed during onboarding (#17) on a clean checkout; each runs in
+under one second. Prerequisites: bash 3.2+, git, `gh` (authenticated — check
+`gh auth status`), jq, shellcheck v0.11.0 and actionlint 1.7.12 (the ci.yml
+pins). No failures or workarounds were observed.
 
 Run steps in this order. Do not improvise alternative commands when these work.
 
-<!-- CUSTOMIZE: Replace with commands verified to work in a clean environment,
-     including known failures and workarounds. Keep this in sync with
-     `.github/workflows/copilot-setup-steps.yml` so your interactive and cloud
-     environments match. Example:
+1. `bash scripts/tuning-status.sh` — expect `TUNED: ...`, exit 0. A
+   `CUSTOMIZE` marker reappearing fails this and the CI `quality` job.
+2. `bash scripts/check-md-links.sh` — Markdown path references resolve.
+3. `bash scripts/check-template-sync.sh` — issue forms match body templates.
+4. `git ls-files -z '*.sh' ':!docs/context/**' | xargs -0 shellcheck -S style`
+   — shell hygiene. `docs/context/**` is raw intake material and is excluded
+   here and in step 2's script for the same reason: it must never require
+   edits to keep checks green.
+5. `actionlint -color` — workflow lint.
 
-     1. `npm ci`               — install server/app dependencies (~2 min).
-     2. `pip install platformio` — required before any firmware command.
-     3. `npm test`             — full unit test suite; must pass before any PR.
-     4. `pio test -e native -d firmware` — firmware logic tests on the host.
-        Note: `pio test` without `-e native` tries to reach real hardware and
-        will fail in cloud environments — never use it there.
--->
+When the first real toolchain lands (E1+), extend this list together with
+`.github/workflows/ci.yml` and `.github/workflows/copilot-setup-steps.yml`
+(the Sync Triangle — see the project-onboarding skill).
 
 ## Working a Task issue
 
@@ -68,6 +74,10 @@ and Routing. Read all of it before writing code.
    deviations, follow-ups (format in
    `.github/skills/session-orchestration/SKILL.md`).
 
+Two automated-writer lanes sit outside this flow: dependabot PRs are exempt
+from issue-first; the human merges them directly. Monthly retro-hygiene
+issues are `needs:human` by construction; the human triages them.
+
 ## Pull request conventions
 
 - Title: imperative mood, mirrors the Task issue title.
@@ -83,4 +93,7 @@ and Routing. Read all of it before writing code.
 - Acceptance criteria without evidence, or verification commands not run.
 - Secrets, tokens, or credentials in code or config.
 - Modified CI workflows, rulesets, or checks without an explicit mandate.
-- Non-English persistent artifacts (code comments, docs, commit messages).
+- Language policy (AGENTS.md §8) violated: agreements, code comments, commit
+  messages, PR bodies, and `.github/` files must be English (Japanese is
+  allowed only in `docs/context/` raw material, issue titles/bodies, and the
+  root `README.md`).
