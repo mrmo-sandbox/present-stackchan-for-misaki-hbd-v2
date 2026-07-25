@@ -1,7 +1,8 @@
-# Pre-installs tools into the Copilot cloud (coding) agent's ephemeral
-# environment so it can build and test without exploring. Keep in sync with
-# the "validated commands" section of .github/copilot-instructions.md and
-# with ci.yml. The job name MUST be exactly `copilot-setup-steps`.
+# Pre-installs tools into an ephemeral agent environment so it can verify
+# without exploring (kept per decision Q1, #17 — exec:cloud stays reserved).
+# Keep in sync with the "validated commands" section of
+# .github/copilot-instructions.md and with ci.yml. The job name MUST be
+# exactly `copilot-setup-steps`.
 name: "Copilot Setup Steps"
 
 on:
@@ -19,15 +20,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # CUSTOMIZE: add the project's toolchain setup. Examples:
-      #
-      # - uses: actions/setup-node@v4
-      #   with: { node-version: 22, cache: npm }
-      # - run: npm ci
-      #
-      # - uses: actions/setup-python@v5
-      #   with: { python-version: "3.12" }
-      # - run: pip install --upgrade platformio
-
-      - name: Placeholder
-        run: echo "Add project setup steps here (see comments above)."
+      # Docs/scripts toolchain only — the repository is docs/planning-only
+      # until the E1+ trees land. Versions mirror the ci.yml pins.
+      - name: Install pinned shellcheck and actionlint
+        env:
+          SHELLCHECK_VERSION: v0.11.0
+          ACTIONLINT_VERSION: 1.7.12
+        run: |
+          curl -fsSL "https://github.com/koalaman/shellcheck/releases/download/${SHELLCHECK_VERSION}/shellcheck-${SHELLCHECK_VERSION}.linux.x86_64.tar.xz" \
+            | tar -xJ
+          sudo install "shellcheck-${SHELLCHECK_VERSION}/shellcheck" /usr/local/bin/shellcheck
+          rm -rf "shellcheck-${SHELLCHECK_VERSION}"
+          shellcheck --version
+          curl -fsSL "https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}/actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz" \
+            | tar -xz actionlint
+          sudo install actionlint /usr/local/bin/actionlint
+          rm -f actionlint
+          actionlint --version

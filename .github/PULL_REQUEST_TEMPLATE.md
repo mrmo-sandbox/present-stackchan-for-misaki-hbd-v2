@@ -35,4 +35,4 @@ None.
 - [ ] Every command in the issue's **Verification** section was run; output captured above.
 - [ ] No test, lint rule, or CI check was deleted, skipped, or weakened.
 - [ ] Record-before-report comment posted on the Task issue.
-- [ ] All persistent artifacts in this PR are English-only.
+- [ ] Language policy (AGENTS.md §8) respected: agreements, code comments, commits, `.github/` files, and this PR body are English (Japanese only where §8 allows: `docs/context/` raw material, issue titles/bodies, root README).

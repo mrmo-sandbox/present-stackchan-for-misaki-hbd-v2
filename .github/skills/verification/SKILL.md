@@ -23,8 +23,8 @@ in layer 1 is investing in delegation itself.
    `.github/instructions/code-review.instructions.md`. Catches claim/evidence
    gaps and silent deviations before a human spends attention.
 4. **Human review** — judgment: is this the *right* change? Protected by
-   branch ruleset (required PR + required checks + human approval on
-   agent-authored PRs).
+   branch ruleset (required PR + required checks); the human merge is the
+   approval gate — agents never merge.
 
 Never compensate for a lower layer at a higher one ("reviewer will catch it")
 and never weaken a lower layer to pass ("delete the flaky test"). A failing

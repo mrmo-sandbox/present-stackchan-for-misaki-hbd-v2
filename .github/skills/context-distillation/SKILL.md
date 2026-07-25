@@ -31,10 +31,10 @@ better.
 3. **Resolve conflicts explicitly.** Where sources disagree, present the
    options; a human picks. Record the pick as an ADR if it is architectural,
    or directly as the surviving `REQ` otherwise.
-4. **Write the diff, open a PR.** Agreements change only via PR with human
-   approval (`docs.instructions.md`). The PR description lists each new/changed
-   `REQ-###`/ADR with its source link. **Merge = agreement**; the review
-   thread is the negotiation record.
+4. **Write the diff, open a PR.** Agreements change only via PR; the human
+   merge is the approval gate — agents never merge (`docs.instructions.md`).
+   The PR description lists each new/changed `REQ-###`/ADR with its source
+   link. **Merge = agreement**; the review thread is the negotiation record.
 5. **Tier the knowledge** (see below) and, when a tier assignment adds or
    changes instruction/skill files, include those edits in the same PR so the
    agreement and its delivery mechanism land together.

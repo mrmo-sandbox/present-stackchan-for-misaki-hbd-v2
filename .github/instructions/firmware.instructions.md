@@ -4,8 +4,18 @@ applyTo: "firmware/**"
 
 # Firmware Rules (PlatformIO / embedded targets)
 
-<!-- CUSTOMIZE: Adjust the `applyTo` glob above and the board/env names below
-     to match this repository. Delete this file if the project has no firmware. -->
+> **Provisional (set at E0 onboarding, #17).** There is no `firmware/` tree
+> yet — it arrives with Epic E3. The board, env names, and blocking threshold
+> below come from the plan-intake bundle (`docs/context/stackchan-hw/` and
+> the E3 epic draft) and must be re-verified against the real
+> `platformio.ini` during E3 hardware bring-up.
+
+## Target (provisional until E3)
+
+- Device: StackChan kit on an M5Stack CoreS3 (M5Stack K151 in the plan
+  intake), ESP32-S3 MCU — 2.4 GHz Wi-Fi only, no 5 GHz.
+- PlatformIO envs: `m5stack-cores3` (device build, StackChan-BSP/M5Unified
+  stack) and `native` (host-side unit tests).
 
 ## Environment reality
 
@@ -13,7 +23,7 @@ applyTo: "firmware/**"
   flashing, no sensors. Anything that needs real hardware belongs to a task
   labeled `exec:ide` (see `.github/skills/task-routing/SKILL.md`). Never mark a
   hardware-dependent acceptance criterion as verified from a cloud environment.
-- Host-side verification that *is* possible anywhere: `pio run -e <env>`
+- Host-side verification that *is* possible anywhere: `pio run -e m5stack-cores3`
   (build) and `pio test -e native` (unit tests in the `native` environment).
 
 ## Design for testability
@@ -30,7 +40,7 @@ applyTo: "firmware/**"
 - Respect the memory budget of the target MCU: prefer static allocation,
   avoid unbounded `String`/heap growth in long-running loops, and document any
   buffer size assumptions next to the buffer.
-- No blocking waits in the main loop beyond <!-- CUSTOMIZE: threshold, e.g. 50 ms -->;
+- No blocking waits in the main loop beyond 50 ms (provisional until E3);
   use non-blocking patterns or the project's scheduler.
 - Pin assignments, credentials, and endpoints come from `platformio.ini`
   build flags or config headers — never hard-code them in logic files.

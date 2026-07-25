@@ -71,8 +71,9 @@ walls.
 | 2026-07-03 | Cloud tasks kept claiming HIL criteria | verification skill + ai-task template: hardware criteria must defer to exec:ide follow-up | #142 #155 |
 ```
 
-5. Human review approves — a retro PR changes how all agents behave, so it
-   gets the same scrutiny as an agreement.
+5. The human merge is the approval gate — agents never merge. A retro PR
+   changes how all agents behave, so it gets the same scrutiny as an
+   agreement.
 
 ## Upstreaming project-agnostic fixes
 

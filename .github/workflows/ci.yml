@@ -1,6 +1,6 @@
 # Deterministic verification gates (layer 1 of .github/skills/verification/SKILL.md).
-# These checks are the ceiling on agent autonomy: the cloud agent iterates on
-# their failures, and branch rulesets should require them before merge.
+# These checks are the ceiling on agent autonomy: agents iterate on their
+# failures, and the branch ruleset requires them before the human merges.
 name: CI
 
 on:
@@ -16,29 +16,39 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
+  # Project quality gate. The repository is docs/planning-only (E0): the
+  # docs and scripts ARE the project, so the gate is tuning regression,
+  # Markdown path integrity, template sync, and shell hygiene — kept in sync
+  # with the "validated commands" section of .github/copilot-instructions.md.
+  # Extend when the first real toolchain lands (E1+).
   quality:
     runs-on: ubuntu-latest
+    env:
+      SHELLCHECK_VERSION: v0.11.0
     steps:
       - uses: actions/checkout@v4
 
-      # CUSTOMIZE: replace the placeholder below with the project's real
-      # gates, and keep them in sync with the "validated commands" section of
-      # .github/copilot-instructions.md. Examples:
-      #
-      # - uses: actions/setup-node@v4
-      #   with: { node-version: 22, cache: npm }
-      # - run: npm ci
-      # - run: npm run lint
-      # - run: npm test
-      #
-      # Firmware logic tests run on the host — no hardware in CI
-      # (.github/instructions/firmware.instructions.md):
-      # - run: pip install --upgrade platformio
-      # - run: pio test -e native -d firmware
-      # - run: pio run -d firmware        # build all envs as a compile gate
+      - name: Scaffold tuning regression guard
+        run: bash scripts/tuning-status.sh
 
-      - name: Scaffold tuning status
-        run: bash scripts/tuning-status.sh --ci
+      - name: Check Markdown path references resolve
+        run: bash scripts/check-md-links.sh
+
+      - name: Check issue-form templates stay in sync with body templates
+        run: bash scripts/check-template-sync.sh
+
+      - name: Install pinned shellcheck
+        run: |
+          curl -fsSL "https://github.com/koalaman/shellcheck/releases/download/${SHELLCHECK_VERSION}/shellcheck-${SHELLCHECK_VERSION}.linux.x86_64.tar.xz" \
+            | tar -xJ
+          sudo install "shellcheck-${SHELLCHECK_VERSION}/shellcheck" /usr/local/bin/shellcheck
+          rm -rf "shellcheck-${SHELLCHECK_VERSION}"
+          shellcheck --version
+
+      # docs/context/** is excluded: raw intake material must never require
+      # edits to keep CI green (same scope as scripts/check-md-links.sh).
+      - name: Shellcheck tracked shell scripts
+        run: git ls-files -z '*.sh' ':!docs/context/**' | xargs -0 shellcheck -S style
 
   # Lints the scaffold itself: shell scripts, workflow files, and the
   # consistency of issue-form templates and Markdown path references.
@@ -58,8 +68,10 @@ jobs:
           rm -rf "shellcheck-${SHELLCHECK_VERSION}"
           shellcheck --version
 
+      # docs/context/** is excluded: raw intake material must never require
+      # edits to keep CI green (same scope as scripts/check-md-links.sh).
       - name: Shellcheck all tracked shell scripts
-        run: git ls-files -z '*.sh' | xargs -0 shellcheck -S style
+        run: git ls-files -z '*.sh' ':!docs/context/**' | xargs -0 shellcheck -S style
 
       - name: Install pinned actionlint
         run: |
