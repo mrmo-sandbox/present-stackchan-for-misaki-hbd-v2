@@ -1,6 +1,6 @@
 ---
 name: task-routing
-description: Decide where and with what each Task issue should run — execution surface (exec:cloud / exec:app / exec:cli / exec:ide label), suggested agent role, and suggested model/reasoning effort. Use this while decomposing an Epic, when filling the Routing block of ai-task issues, when a task changes nature mid-flight and needs re-routing, and whenever someone asks which tool (cloud agent, Copilot app, CLI, IDE) should handle a piece of work.
+description: Decide where and with what each Task issue should run — execution surface (exec:cli / exec:app / exec:ide label; exec:cloud is reserved and unused in this project), suggested agent role, and suggested model/reasoning effort. Use this while decomposing an Epic, when filling the Routing block of ai-task issues, when a task changes nature mid-flight and needs re-routing, and whenever someone asks which surface (Claude Code session, Codex desktop app, human-in-the-loop hardware work) should handle a piece of work.
 ---
 
 # Task Routing
@@ -27,23 +27,23 @@ Score the task on five axes before choosing:
 
 | Label | Surface | Strengths | Choose when |
 |---|---|---|---|
-| `exec:cloud` | Copilot cloud agent (assign issue to Copilot) | Fully async, parallel at scale, ephemeral clean env, delivers a draft PR, iterates on CI failures | Brief is self-contained and unambiguous; no local/hardware needs; ideal for tests, refactors, docs, well-specified features |
-| `exec:app` | Copilot app session (parent/child tree, worktrees) | Steerable in real time, session tree for orchestration, per-session model/agent choice, local checkout | Orchestration itself; tasks needing occasional steering; parallel local work isolated by worktrees; when model choice matters per task |
-| `exec:cli` | Copilot CLI | Scriptable, composable with `gh`, runs in CI/automation | Batch/repetitive repo operations, plan-graph manipulation at scale, scheduled or pipeline-triggered agent work |
-| `exec:ide` | VS Code + Copilot Chat (agent mode) | Human-in-the-loop, full local toolchain, hardware access (e.g., PlatformIO upload/monitor) | Ambiguous or exploratory work; design spikes; anything touching physical devices |
+| `exec:cli` | Claude Code session | Scriptable, composable with `gh`, repo-wide edits from a local checkout, plan-graph manipulation | Planning, docs, and scripted repo work; the planner/orchestrator surface during Epic E0 |
+| `exec:app` | Codex desktop app session | Steerable in real time, per-session model choice, parallel local work isolated by worktrees | Implementation work with a complete brief; from Epic E1 on, also planning and orchestration |
+| `exec:ide` | Human in the loop (editor/terminal on the connected machine) | Human judgment on tap, full local toolchain, hardware access (e.g., PlatformIO upload/monitor) | Ambiguous or exploratory work; design spikes; anything touching physical devices (flash, serial, HIL) |
+| `exec:cloud` | Reserved — unused in this project | — | Never; the slug exists only so the label set and historical issues stay stable |
 
 ## Hard rules
 
 - **Hardware rule.** Building firmware and running `native`-env tests can go
   anywhere; flashing, serial monitoring, and hardware-in-the-loop verification
   route to `exec:ide` (or an `exec:app` session on the machine physically
-  connected to the device). Never let a cloud task carry a hardware-verified
-  acceptance criterion.
+  connected to the device). Never let a task on a surface without device
+  access carry a hardware-verified acceptance criterion.
 - **Sensitivity rule.** Tasks handling data that must stay local route to
   `exec:app`/`exec:ide` with a local model suggested in the Routing block.
 - **Ambiguity rule.** If you cannot write objectively checkable acceptance
-  criteria, the task is not `exec:cloud` yet — either sharpen the brief or
-  route to an interactive surface.
+  criteria, the task is not ready for an autonomous `exec:cli`/`exec:app`
+  session — either sharpen the brief or route to `exec:ide`.
 
 ## Model / reasoning suggestion
 
@@ -62,12 +62,14 @@ change), but the effort tier is meaningful:
 Suggest a role when a specialized definition exists in `.github/agents/`
 (e.g., `planner`, `orchestrator`, `reviewer`) or in the client's agent picker
 (e.g., security- or docs-focused agents). Leave as `default` otherwise; do not
-invent role names that no surface provides.
+invent role names that no surface provides. The planner/orchestrator role runs
+as a Claude Code session during Epic E0 and in the Codex desktop app from E1
+on (E0 decision record).
 
 ## Re-routing
 
-A task changes surface when its nature changes: an `exec:cloud` task that
-turns ambiguous comes back as `exec:ide`/`exec:app`; an exploratory task whose
-outcome is now a crisp spec goes out again as `exec:cloud`. Re-routing is a
-plan change: swap the `exec:*` label, adjust the Routing block, note one line
-of rationale on the issue.
+A task changes surface when its nature changes: an `exec:app` task that turns
+ambiguous or hits hardware comes back as `exec:ide`; an exploratory task whose
+outcome is now a crisp spec goes out again as `exec:cli` or `exec:app`.
+Re-routing is a plan change: swap the `exec:*` label, adjust the Routing
+block, note one line of rationale on the issue.

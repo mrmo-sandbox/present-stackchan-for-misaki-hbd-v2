@@ -15,6 +15,8 @@ Topic directory to distill: docs/context/${input:topic}
 4. Assign each piece of knowledge a tier (always-on / scoped / on-demand) per
    the skill's tiering table, and include any instruction/skill file edits the
    tiering implies.
-5. Open one PR on a branch `task/<issue-or-topic-slug>` containing the
-   agreements diff + tier edits + provenance `status: distilled` updates,
-   with a description listing every new/changed REQ/ADR and its source link.
+5. Open one PR on branch `task/<issue-number>-<short-slug>` — distillation
+   runs as its own Task issue (create it first if none exists), and the PR
+   body carries `Closes #<n>`. The PR contains the agreements diff + tier
+   edits + provenance `status: distilled` updates, with a description
+   listing every new/changed REQ/ADR and its source link.

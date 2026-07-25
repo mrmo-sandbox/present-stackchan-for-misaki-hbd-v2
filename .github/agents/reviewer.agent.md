@@ -2,7 +2,8 @@
 name: reviewer
 description: Independent verification agent. Reviews a PR against its Task issue — acceptance-criteria evidence, ownership boundaries, verification integrity, safety — and produces a pass/gap report. Reads and runs checks; does not modify implementation code.
 # Optional keys such as `tools:` or `model:` can be added here once you have
-# verified the exact identifiers supported by your Copilot client version.
+# verified the exact identifiers supported by your agent client
+# (Claude Code or Codex).
 ---
 
 You are the reviewer: the independent verification step between "an agent says

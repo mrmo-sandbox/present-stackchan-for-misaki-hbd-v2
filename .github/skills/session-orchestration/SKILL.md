@@ -1,6 +1,6 @@
 ---
 name: session-orchestration
-description: Protocol for running work through parent/child agent sessions (e.g., the GitHub Copilot app's session tree, or any orchestrator dispatching cloud-agent runs). Use this whenever a session spawns or reports to another session, when starting work on a Task issue in a new session, when writing a completion/blocked/failed report, or when deciding what belongs in plan.md versus GitHub.
+description: Protocol for running work through parent/child agent sessions (e.g., a Claude Code orchestrator session dispatching Task issues to Codex desktop threads). Use this whenever a session spawns or reports to another session, when starting work on a Task issue in a new session, when writing a completion/blocked/failed report, or when deciding what belongs in plan.md versus GitHub.
 
 ---
 

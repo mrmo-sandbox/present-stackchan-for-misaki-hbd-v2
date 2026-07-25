@@ -18,7 +18,8 @@ in layer 1 is investing in delegation itself.
    tests, build. Runs locally and in CI. Binary outcomes only.
 2. **Security** — secret scanning, dependency review, code scanning. Never
    ship "temporary" suppressions without a linked issue.
-3. **AI review** — Copilot code review and/or the `reviewer` agent, guided by
+3. **AI review** — a Claude/Codex session reading
+   `.github/agents/reviewer.agent.md` +
    `.github/instructions/code-review.instructions.md`. Catches claim/evidence
    gaps and silent deviations before a human spends attention.
 4. **Human review** — judgment: is this the *right* change? Protected by
@@ -56,8 +57,9 @@ gate is information; removing the gate destroys the information.
 When a check fails, classify before touching anything:
 
 - **Environment** (missing tool, network, flake): fix the environment —
-  usually `.github/workflows/copilot-setup-steps.yml` or CI config — and note
-  it as a retro candidate.
+  usually the CI environment-setup workflow
+  (`.github/workflows/copilot-setup-steps.yml`, file name kept for
+  compatibility) or CI config — and note it as a retro candidate.
 - **Defect** (the code is wrong): fix the code.
 - **Specification mismatch** (the test encodes a requirement the task was
   told to change, or the requirement itself is wrong): **stop patching.**
@@ -67,8 +69,9 @@ When a check fails, classify before touching anything:
 
 ## Writing good Verification sections (planner)
 
-- Commands must run in the task's routed environment (`exec:cloud` tasks get
-  no hardware — split HIL criteria into an `exec:ide` follow-up).
+- Commands must run in the task's routed environment (`exec:app` Codex
+  sessions have no hardware — split HIL criteria into an `exec:ide`
+  follow-up).
 - Prefer commands over prose: "run X, expect Y" beats "make sure it works".
 - Include the negative case when it matters ("`grep -R <secret-pattern>`
   returns nothing").
