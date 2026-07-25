@@ -67,7 +67,7 @@ gh issue create --title "Epic: <outcome>" --label "type:epic" --body-file epic-b
 # parent, labels, and dependencies atomically
 # (.github/skills/plan-management/scripts/new-task.sh wraps this call; body:
 #  copy of templates/task-body.md, filled in)
-gh issue create --title "<task title>" --label "type:task,exec:cloud,ai:ready" \
+gh issue create --title "<task title>" --label "type:task,exec:app,ai:ready" \
   --body-file task-body.md --parent 12 --blocked-by 14,15
 
 # Re-wire ordering on an EXISTING issue (only here does edit stay in play)

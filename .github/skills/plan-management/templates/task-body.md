@@ -41,7 +41,8 @@
 ## Verification
 
 <!-- Commands to run, with expected results, executable on the routed
-     surface (exec:cloud tasks get no hardware). -->
+     surface (exec:app Codex sessions have no hardware — split HIL criteria
+     into an exec:ide follow-up). -->
 
 ```bash
 

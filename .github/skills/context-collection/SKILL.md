@@ -48,9 +48,10 @@ must be re-verified before becoming an agreement.
    conversation, capture it here (method: `verbatim`, source: the
    conversation) — otherwise it evaporates when the session ends.
 3. **External systems via MCP.** Pull from external tools (docs, tickets,
-   designs) through the MCP servers configured for this repo
-   (`.vscode/mcp.json` for interactive surfaces; repository settings for the
-   cloud agent). Record which server/tool produced the data in `source`.
+   designs) through the MCP servers configured in your client's MCP config
+   (`.mcp.json` for Claude Code, `~/.codex/config.toml` for Codex,
+   `.vscode/mcp.json` for VS Code). Record which server/tool produced the
+   data in `source`.
 4. **No secrets, ever.** Redact tokens, credentials, and personal data before
    a file lands. If sensitivity is `confidential`, confirm with a human that
    the repository is an acceptable home before committing.
