@@ -18,7 +18,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # Docs/scripts toolchain only — the repository is docs/planning-only
       # until the E1+ trees land. Versions mirror the ci.yml pins.
