@@ -6,6 +6,7 @@
 # actually enforced on pull requests.
 #
 # Agreements are human-owned decisions; workflows are the verification
-# gates — both need a human reviewer on every change (README, step 5).
+# gates — for both, the human merge is the approval gate; agents never
+# merge (README, step 5).
 /docs/agreements/    @mochan-tk
 /.github/workflows/  @mochan-tk
