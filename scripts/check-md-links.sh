@@ -10,11 +10,8 @@
 # material, which must never require edits to keep CI green.
 #
 # Allowlist — intentional example paths that documentation cites although
-# the files do not exist (onboarding placeholders, replaced per project):
-#   docs/context/device-pairing/    example area cited by the example rows
-#                                   in docs/agreements/requirements.md and
-#                                   docs/agreements/non-goals.md; remove
-#                                   when distillation replaces those rows
+# the files do not exist (onboarding placeholders, replaced per project).
+# Currently empty; add one prefix per line when needed.
 #
 # Output: brief OK summary and exit 0 when everything resolves; list of
 # missing paths and exit 1 otherwise.
@@ -27,9 +24,7 @@ cd "$ROOT"
 
 REF_PATTERN='(\.github|docs|scripts)/[A-Za-z0-9_/.-]+\.(md|yml|sh|json)'
 
-ALLOW_PREFIXES=(
-  "docs/context/device-pairing/"
-)
+ALLOW_PREFIXES=()
 
 md_files=()
 while IFS= read -r f; do md_files+=("$f"); done \
@@ -52,7 +47,7 @@ while IFS= read -r ref; do
     continue
   fi
   skip=0
-  for prefix in "${ALLOW_PREFIXES[@]}"; do
+  for prefix in ${ALLOW_PREFIXES[@]+"${ALLOW_PREFIXES[@]}"}; do
     case "$ref" in
       "$prefix"*)
         skip=1
