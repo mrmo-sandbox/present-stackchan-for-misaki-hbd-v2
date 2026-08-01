@@ -3,9 +3,6 @@
 # plan.md is a per-session cache, never committed (.github/skills/session-orchestration/SKILL.md).
 plan.md
 
-# Personal Claude Code settings — per-user, never committed.
-.claude/settings.local.json
-
 # OS cruft
 .DS_Store
 Thumbs.db

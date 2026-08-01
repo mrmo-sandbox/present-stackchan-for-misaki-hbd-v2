@@ -19,9 +19,7 @@ exist there, that is a gap to raise, not a detail to invent.
 
 - **Self-contained.** The body alone (plus its linked references) is a complete
   work order following `.github/ISSUE_TEMPLATE/ai-task.yml`. Assume the
-  executing agent sees nothing else. Context & references must link the
-  `.github/instructions/*.instructions.md` files whose `applyTo` globs cover
-  the task's File-ownership paths.
+  executing agent sees nothing else.
 - **Traceable.** Acceptance criteria reference `REQ-###` IDs where they exist,
   and every criterion is objectively checkable by a listed verification
   command or observable artifact.

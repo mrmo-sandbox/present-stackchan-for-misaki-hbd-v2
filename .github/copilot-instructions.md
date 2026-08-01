@@ -25,6 +25,7 @@ details Copilot needs to work efficiently in this repository.
   `retro-hygiene.yml`.
 - `.github/skills/` — procedures. `.github/instructions/` — path-scoped rules.
 - `.github/agents/` — role definitions (orchestrator, planner, reviewer).
+- `.agents/skills/` — Codex discovery links to the canonical procedures.
 - No application code yet: `firmware/`, proxy/server, and app trees arrive
   with Epics E1+ (`firmware.instructions.md` is provisional until E3).
 

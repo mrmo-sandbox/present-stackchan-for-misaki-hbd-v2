@@ -1,6 +1,6 @@
 ---
 name: session-orchestration
-description: Protocol for running work through parent/child agent sessions (e.g., a Claude Code orchestrator session dispatching Task issues to Codex desktop threads). Use this whenever a session spawns or reports to another session, when starting work on a Task issue in a new session, when writing a completion/blocked/failed report, or when deciding what belongs in plan.md versus GitHub.
+description: Protocol for running work through parent/child agent sessions across the project's Claude Code, Codex desktop, and human-operated surfaces. Use this whenever a session spawns or reports to another session, when starting work on a Task issue in a new session, when writing a completion/blocked/failed report, or when deciding what belongs in plan.md versus GitHub.
 
 ---
 
@@ -94,54 +94,15 @@ is the point.
 6. Route `needs-replan` outcomes to the planner procedure
    (`plan-management` §Replanning) and post the rationale on the Epic.
 
-## Cross-tool dispatch
+## Project dispatch mapping
 
-Sessions on different tools share no session tree — issue comments are the
-only parent<->child channel in every lane. Exactly three lanes exist
-(ADR-0001, `docs/agreements/adr/ADR-0001-division-of-labor.md`); `exec:ide`
-tasks are not dispatched — the human is the surface.
-
-| Lane | Surface | Runs | Kickoff |
-|---|---|---|---|
-| 1 `exec:cli` | Claude Code child session (E0) | child protocol | start-task wrapper |
-| 2 `exec:app` | Codex desktop child thread | child protocol | fixed snippet below |
-| 3 orchestrator-on-Codex (E1 on) | Codex desktop thread | parent protocol | human opens the thread |
-
-**Lane 1 — `exec:cli` (Claude Code child, E0).** The human or orchestrator
-opens a fresh Claude Code session (or the `claude` CLI) in a new worktree:
-
-```bash
-git worktree add ../wt-task-<n> -b task/<n>-<slug>
-```
-
-then invokes the start ritual via the `.claude/commands/start-task` wrapper,
-which wraps `.github/prompts/start-task.prompt.md`. Steering and reports are
-issue comments.
-
-**Lane 2 — `exec:app` (Codex desktop implementer child).** The dispatcher
-hands over the issue number plus this fixed kickoff snippet, verbatim:
-
-```text
-Read AGENTS.md §9, then run the child protocol in .github/skills/session-orchestration/SKILL.md for issue #N; create or rename your branch to task/<N>-<slug>.
-```
-
-Steering = comments on the issue, which the child re-reads. Prerequisites:
-`gh auth status` green inside a Codex session; network egress approved for
-github.com and api.github.com; Codex's per-thread worktree satisfies the
-worktree rule — no extra `git worktree add` needed.
-
-**Lane 3 — orchestrator-on-Codex (E1 onward).** A Codex desktop thread runs
-the parent protocol above: it reads `AGENTS.md` and this skill via
-`.agents/skills` discovery, picks dispatchable tasks with
-`.github/skills/plan-management/scripts/frontier.sh`, creates tasks with
-`.github/skills/plan-management/scripts/new-task.sh`, sets board dates via
-`scripts/setup-project.sh` `dates`, and hands child kickoffs to the human —
-the human physically opens Codex threads. Before dispatching dependents it
-verifies record-before-report comments with its own `gh` calls.
-
-**Seat rule (ADR-0001).** During E0 the orchestrator seat is a Claude Code
-session; from E1 it is a Codex desktop thread; the human always holds the
-merge seat.
+Cross-tool sessions share no session tree, so issue comments remain the only
+handoff channel. ADR-0001 defines the mapping: `exec:cli` uses Claude Code,
+`exec:app` uses Codex desktop, and `exec:ide` is the human-operated lane.
+Codex holds the planner/orchestrator seat from E1 onward and discovers these
+procedures through `.agents/skills`; the human always holds the merge seat.
+Every executor follows the child protocol above, and every dispatcher passes
+only the Task issue number after confirming an isolated worktree/branch.
 
 ## Escalation to humans
 

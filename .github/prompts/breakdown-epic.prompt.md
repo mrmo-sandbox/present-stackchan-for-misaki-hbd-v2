@@ -14,9 +14,7 @@ Epic issue number: ${input:epicNumber}
 2. Decompose **only the phase that is about to start** into Task issues.
    Draft each brief per `.github/ISSUE_TEMPLATE/ai-task.yml`: Objective,
    Context & references (REQ-### links), Acceptance criteria, Out of scope,
-   File ownership, Verification, Routing. Context & references must link the
-   `.github/instructions/*.instructions.md` files whose `applyTo` globs cover
-   the task's File-ownership paths.
+   File ownership, Verification, Routing.
 3. Check the partition: parallel-intended tasks must have disjoint
    File-ownership paths; overlaps get `blocked-by` edges instead.
 4. Show me the proposed task list (title, exec label, dependencies, ownership)
@@ -24,7 +22,5 @@ Epic issue number: ${input:epicNumber}
 5. On approval, create the issues with
    `.github/skills/plan-management/scripts/new-task.sh` (or the equivalent
    `gh issue create --parent` / `gh issue edit --add-blocked-by` calls), add
-   `ai:ready` only to complete briefs, set/update board dates via
-   `scripts/setup-project.sh dates` (plan-management skill, Roadmap
-   scheduling), and post one summary comment on the Epic listing what was
-   created and why.
+   `ai:ready` only to complete briefs, and post one summary comment on the
+   Epic listing what was created and why.
