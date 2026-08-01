@@ -43,7 +43,7 @@ better.
 
 | Tier | Test | Destination | Budget |
 |---|---|---|---|
-| Always-on | Needed on *most* tasks, stable, compressible to a few lines | `AGENTS.md`, `.github/copilot-instructions.md` — delivered natively as `AGENTS.md` to Codex, and to Claude Code via the `CLAUDE.md` @imports | keep each file lean — target well under ~150 lines; adding usually means removing |
+| Always-on | Needed on *most* tasks, stable, compressible to a few lines | `AGENTS.md`, `.github/copilot-instructions.md` | keep each file lean — target well under ~150 lines; adding usually means removing |
 | Scoped | Needed only when touching certain paths | `.github/instructions/<area>.instructions.md` with `applyTo` | one concern per file |
 | On-demand | Large, procedural, or rarely needed | a skill under `.github/skills/` or a doc under `docs/agreements/` referenced from issues | no practical size limit; discoverability via skill descriptions and issue links |
 

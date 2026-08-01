@@ -1,11 +1,12 @@
 # Scaffold Changelog & Lineage
 
 This repository instance was created from the **agentic-dev-scaffold**
-template. This file tracks which template version the instance adopted and
-how to move between versions. The project's own changelog, if any, lives
-elsewhere — this file is about the scaffolding only.
+template and now follows its optimized **tt1-v2** successor. This file tracks
+which template version the instance adopted and how to move between versions.
+The project's own changelog, if any, lives elsewhere — this file is about the
+scaffolding only.
 
-**Scaffold version adopted by this instance:** v0.5.0
+**Scaffold version adopted by this instance:** tt1-v2 snapshot `d4de4448`
 *(update this line when upgrading; the onboarding PR should confirm it)*
 
 ## Upgrading an instance
@@ -28,6 +29,13 @@ repository and mark the retro-log Fix cell `[upstreamed]` — see
 inherit what this one learned.
 
 ## Versions
+
+### tt1-v2 snapshot d4de4448 — 2026-08-01
+
+Selective migration to the optimized template layout. Project onboarding
+settings and ADR-0001 routing remain authoritative; redundant Claude command
+wrappers and duplicated cross-tool procedure text were retired. Codex skill
+discovery links remain as a project-specific requirement.
 
 ### v0.5.0 — 2026-07-04
 
